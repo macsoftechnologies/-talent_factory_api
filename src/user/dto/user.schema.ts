@@ -1,6 +1,6 @@
 import { Schema } from "@nestjs/mongoose";
 import { Prop, SchemaFactory } from "@nestjs/mongoose/dist";
-
+import {Document} from 'mongoose'
  
 @Schema({timestamps:true})
 export class User extends Document{
@@ -13,9 +13,9 @@ export class User extends Document{
     @Prop()
     password:string
     @Prop()
-    Resume:string
+    resume:string
     @Prop()
-    Document:string
+    document:string
     @Prop()
     Date:string
     @Prop()
@@ -28,7 +28,7 @@ export class User extends Document{
     status:string
     @Prop({enum:['admin','Super-admin','employer','candidate']})
     role:string
-
+     
     
 }
 
