@@ -1,16 +1,15 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { SharedService } from './shared/shared.service';
-import { CategoryModule } from './category/category.module';
-import { SubcategoryModule } from './subcategory/subcategory.module';
+import { JobsModule } from './jobs/jobs.module';
+import { ProfessionalModule } from './professional/professional.module';
+import { StudentModule } from './student/student.module';
+import { OrganizationModule } from './organization/organization.module';
  
 @Module({
-  imports: [MongooseModule.forRoot('mongodb+srv://ravi:VWTF2ENAbsIysux2@ravi.mkclc.mongodb.net/talenFactory?retryWrites=true&w=majority'),UserModule, AuthModule, CategoryModule, SubcategoryModule ],
+  imports: [MongooseModule.forRoot('mongodb+srv://macsof:macsof@nextlevelcarwash.yjs3i.mongodb.net/TalentFactory?retryWrites=true&w=majority'), JobsModule, ProfessionalModule, StudentModule, OrganizationModule ],
   controllers: [AppController],
-  providers: [AppService, SharedService],
+  providers: [AppService],
 })
 export class AppModule {}
