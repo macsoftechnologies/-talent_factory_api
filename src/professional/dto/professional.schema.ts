@@ -12,8 +12,18 @@ export class professional extends Document{
     @Prop()
     phNumber:string
     @Prop()
+    gender:string
+    @Prop()
     password:string
-
+    @Prop()
+    education:string
+    @Prop()
+    experience:string
+    @Prop()
+    skills:string
+    @Prop()
+    resume:string
+    
 }
 
 export const professionalSchema=SchemaFactory.createForClass(professional)

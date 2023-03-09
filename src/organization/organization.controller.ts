@@ -45,4 +45,18 @@ export class OrganizationController {
       }
     }
   }
+
+
+  @Post('/updateOrganzation')
+  async updateOrg(@Body()  body:organizationDto){
+    try{
+      const response=await this.organizationService.editOrg(body)
+      return response
+    }catch(error){
+      return {
+        statusCode:HttpStatus.INTERNAL_SERVER_ERROR,
+        message:error 
+      }
+    }
+  }
 }

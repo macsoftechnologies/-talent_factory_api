@@ -6,6 +6,10 @@ export class student extends Document{
     @Prop({default:uuid})
     studentId:string
     @Prop()
+    firstName:string
+    @Prop()
+    lastName:string
+    @Prop()
     name:string
     @Prop()
     email:string
@@ -13,6 +17,16 @@ export class student extends Document{
     phNumber:string
     @Prop()
     password:string
+    @Prop()
+    resume:string
+    @Prop()
+    address:string
+    @Prop()
+    education:string
+    @Prop()
+    gender:string
+    
+
 }
 
 export const studentSchema=SchemaFactory.createForClass(student)

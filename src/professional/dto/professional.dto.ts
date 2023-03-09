@@ -11,5 +11,15 @@ export class professionalDto{
     phNumber:string
     @ApiProperty()
     password:string
-    
+   @ApiProperty()
+    education:string
+    @ApiProperty()
+    experience:string
+    @ApiProperty()
+    skills:string
+    @ApiProperty()
+    resume:string
+    @ApiProperty()
+    gender:string
 }
+   

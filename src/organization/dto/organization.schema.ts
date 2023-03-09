@@ -13,5 +13,11 @@ export class organization extends Document{
     password:string
     @Prop({default:uuid})
     organizationId:string
+   @Prop()
+    description:string
+    @Prop()
+    location:string
+    
+    
 }
 export const organizationSchema=SchemaFactory.createForClass(organization)

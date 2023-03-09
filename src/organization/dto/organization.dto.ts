@@ -11,5 +11,10 @@ export class organizationDto{
     password:string
     @ApiProperty()
     organizationId:string
+    @ApiProperty()
+    description:string
+    @ApiProperty()
+    location:string
     
+
 }

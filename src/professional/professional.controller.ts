@@ -1,7 +1,10 @@
-import { Body, Controller, Get, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { AnyFilesInterceptor, FileFieldsInterceptor } from '@nestjs/platform-express';
 import { ApiBody } from '@nestjs/swagger';
+import { extname } from 'path';
 import { professionalDto } from './dto/professional.dto';
 import { ProfessionalService } from './professional.service';
+import { diskStorage } from 'multer';
 
 @Controller('professional')
 export class ProfessionalController {
@@ -44,6 +47,34 @@ export class ProfessionalController {
       return {
         statusCode:HttpStatus.INTERNAL_SERVER_ERROR,
         message:error
+      }
+    }
+  }
+
+  
+  @UseInterceptors(
+    AnyFilesInterceptor({
+      storage: diskStorage({
+        destination: './files',
+        filename: (req, file, cb) => {
+          const randomName = Array(32)
+            .fill(null)
+            .map(() => Math.round(Math.random() * 16).toString(16))
+            .join('');
+          cb(null, `${randomName}${extname(file.originalname)}`);
+        },
+      }),
+    }),
+  )
+  @Post('/updateProfessional')
+  async updateVendor(@Body() body:professionalDto,@UploadedFiles() image){
+    try{
+      const response=await this.professionalService.updateProfession(body,image)
+      return response
+    }catch(error){
+      return {
+        statusCode:HttpStatus.INTERNAL_SERVER_ERROR,
+        message:error 
       }
     }
   }

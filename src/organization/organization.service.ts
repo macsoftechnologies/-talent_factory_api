@@ -62,4 +62,32 @@ export class OrganizationService {
             }
         }
     }
+
+    async editOrg(params:organizationDto){
+     try{
+        const edit =await this.organizationModel.updateOne(
+            {organizationId:params.organizationId},
+            {$set:{
+                name:params.name,
+                email:params.email,
+                phNumber:params.phNumber,
+                password:params.password,
+                description:params.description,
+                location:params.location
+             }}
+        )
+        if(edit){
+            return {
+                statusCode:HttpStatus.OK,
+                message:'updated sucessfully',
+                updated:edit
+            }
+        }
+     }catch(error){
+        return{
+            statusCode:HttpStatus.INTERNAL_SERVER_ERROR,
+            message:error 
+        }
+     }
+    }
 }
