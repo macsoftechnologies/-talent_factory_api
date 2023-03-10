@@ -27,6 +27,37 @@ export class OrganizationService {
     }
 
 
+    async Login(req: organizationDto) {
+        try {
+          const loginRes = await this.organizationModel
+            .findOne({ $or: [{ email: req.email }] })
+            .lean();
+          if (loginRes) {
+            if (loginRes.password === req.password) {
+              return {
+                statusCode: HttpStatus.OK,
+                message: 'Login SuccessFully',
+                logindetails: loginRes,
+              };
+            }
+            return {
+              statusCode: HttpStatus.BAD_REQUEST,
+              message: 'Invalid Password',
+            };
+          }
+          return {
+            statusCode: HttpStatus.NOT_FOUND,
+            msg: 'User Not Found',
+          };
+        } catch (error) {
+          return {
+            statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+            message: error.message,
+          };
+        }
+      }
+
+
     async getOrg(){
         try{
             const getOrg=await this.organizationModel.find()
@@ -70,7 +101,7 @@ export class OrganizationService {
             {$set:{
                 name:params.name,
                 email:params.email,
-                phNumber:params.phNumber,
+                phoneNumber:params.phoneNumber,
                 password:params.password,
                 description:params.description,
                 location:params.location

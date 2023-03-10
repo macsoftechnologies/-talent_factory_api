@@ -24,6 +24,27 @@ export class ProfessionalController {
     }
   }
 
+
+  @Post('/login')
+  async login(@Body() req:professionalDto) {
+    try {
+      const result = await this. professionalService.Login(req);
+      if (result) {
+        return result;
+      }
+      return {
+        statusCode: HttpStatus.BAD_REQUEST,
+        msg: 'Invalid credentials',
+      };
+    } catch (error) {
+      return {
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        msg: error,
+      };
+    }
+  }
+
+
   @Get()
   async proget(){
     try{

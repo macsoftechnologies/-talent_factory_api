@@ -6,7 +6,7 @@ export class organizationDto{
     @ApiProperty()
     email:string
     @ApiProperty()
-    phNumber:string
+    phoneNumber:string
     @ApiProperty()
     password:string
     @ApiProperty()

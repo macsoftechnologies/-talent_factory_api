@@ -32,6 +32,36 @@ export class ProfessionalService {
         }
     }
 
+    async Login(req: professionalDto) {
+        try {
+          const loginRes = await this.professionalModel
+            .findOne({ $or: [{ email: req.email }] })
+            .lean();
+          if (loginRes) {
+            if (loginRes.password === req.password) {
+              return {
+                statusCode: HttpStatus.OK,
+                message: 'Login SuccessFully',
+                logindetails: loginRes,
+              };
+            }
+            return {
+              statusCode: HttpStatus.BAD_REQUEST,
+              message: 'Invalid Password',
+            };
+          }
+          return {
+            statusCode: HttpStatus.NOT_FOUND,
+            msg: 'User Not Found',
+          };
+        } catch (error) {
+          return {
+            statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+            message: error.message,
+          };
+        }
+      }
+
 
     async getPro(){
         try{

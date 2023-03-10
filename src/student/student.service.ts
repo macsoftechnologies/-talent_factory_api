@@ -2,7 +2,7 @@ import { HttpStatus, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { SharedService } from "src/shared/shared.service";
-import { studentDto } from "./dto/student.dto";
+import {  studentDto } from "./dto/student.dto";
 import { student } from "./dto/student.schema";
 
 @Injectable()
@@ -64,6 +64,37 @@ export class StudentService {
         }
     }
    }
+
+   async Login(req: studentDto) {
+    try {
+      const loginRes = await this.studentModel
+        .findOne({ $or: [{ email: req.email }] })
+        .lean();
+      if (loginRes) {
+        if (loginRes.password === req.password) {
+          return {
+            statusCode: HttpStatus.OK,
+            message: 'Login SuccessFully',
+            logindetails: loginRes,
+          };
+        }
+        return {
+          statusCode: HttpStatus.BAD_REQUEST,
+          message: 'Invalid Password',
+        };
+      }
+      return {
+        statusCode: HttpStatus.NOT_FOUND,
+        msg: 'User Not Found',
+      };
+    } catch (error) {
+      return {
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: error.message,
+      };
+    }
+  }
+
 
 
    async updatestudent(req:studentDto,image){

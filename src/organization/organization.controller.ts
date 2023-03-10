@@ -19,6 +19,25 @@ export class OrganizationController {
     }
   }
 
+  @Post('/login')
+  async login(@Body() req:organizationDto) {
+    try {
+      const result = await this.organizationService.Login(req);
+      if (result) {
+        return result;
+      }
+      return {
+        statusCode: HttpStatus.BAD_REQUEST,
+        msg: 'Invalid credentials',
+      };
+    } catch (error) {
+      return {
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        msg: error,
+      };
+    }
+  }
+
   @Get('/getOrganization')
   async getOrg(){
     try{

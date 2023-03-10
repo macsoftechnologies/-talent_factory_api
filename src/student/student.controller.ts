@@ -51,6 +51,24 @@ export class StudentController {
   }
 
 
+  @Post('/login')
+  async login(@Body() req:studentDto) {
+    try {
+      const result = await this.studentService.Login(req);
+      if (result) {
+        return result;
+      }
+      return {
+        statusCode: HttpStatus.BAD_REQUEST,
+        msg: 'Invalid credentials',
+      };
+    } catch (error) {
+      return {
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        msg: error,
+      };
+    }
+  }
   
   @UseInterceptors(
     AnyFilesInterceptor({
