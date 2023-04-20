@@ -1,11 +1,16 @@
 import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
 import {  learningOrgDto } from './dto/learingOrg.dto';
 import { LearningOrgService } from './learning-org.service';
+import { ApiBody, ApiTags} from '@nestjs/swagger';
 
 @Controller('learning-org')
 export class LearningOrgController {
   constructor(private readonly learningOrgService: LearningOrgService) {}
  
+  @ApiTags('learning-org')
+  @ApiBody({
+    type: learningOrgDto,
+  })
     @Post('/AddlearnOrg')
     async learningOrg(@Body() body:learningOrgDto){
       try{
@@ -19,7 +24,10 @@ export class LearningOrgController {
       }
     }
 
-
+    @ApiTags('learning-org')
+    @ApiBody({
+      type: learningOrgDto,
+    })
   @Post('/login')
   async login(@Body() req:learningOrgDto) {
     try {
@@ -38,4 +46,6 @@ export class LearningOrgController {
       };
     }
   }
+
+
 }

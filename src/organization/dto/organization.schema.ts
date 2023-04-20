@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from "mongoose";
+ 
 import { v4 as uuid } from 'uuid';
 @Schema({timestamps:true})
 export class organization extends Document{
@@ -13,10 +14,11 @@ export class organization extends Document{
     password:string
     @Prop({default:uuid})
     organizationId:string
-   @Prop()
+    @Prop()
     description:string
     @Prop()
     location:string
+    
     
     
 }

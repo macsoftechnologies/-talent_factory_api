@@ -9,10 +9,12 @@ import { OrganizationModule } from './organization/organization.module';
 import { SharedService } from './shared/shared.service';
 import { AdminModule } from './admin/admin.module';
 import { LearningOrgModule } from './learning-org/learning-org.module';
+import { ApplicantModule } from './applicant/applicant.module';
+import { SkillsModule } from './skills/skills.module';
  
  
 @Module({
-  imports: [MongooseModule.forRoot('mongodb+srv://macsof:macsof@nextlevelcarwash.yjs3i.mongodb.net/TalentFactory?retryWrites=true&w=majority'), JobsModule, ProfessionalModule, StudentModule, OrganizationModule, AdminModule, LearningOrgModule],
+  imports: [MongooseModule.forRoot('mongodb+srv://macsof:macsof@nextlevelcarwash.yjs3i.mongodb.net/TalentFactory?retryWrites=true&w=majority'), JobsModule, ProfessionalModule, StudentModule, OrganizationModule, AdminModule, LearningOrgModule, ApplicantModule,  SkillsModule],
   controllers: [AppController],
   providers: [AppService, SharedService],
 })

@@ -4,10 +4,11 @@ import { Model } from "mongoose";
 import { SharedService } from "src/shared/shared.service";
 import {  studentDto } from "./dto/student.dto";
 import { student } from "./dto/student.schema";
-
+ 
 @Injectable()
 export class StudentService {
-    constructor(@InjectModel(student.name) private studentModel:Model<student>,private sharedService:SharedService){}
+    constructor(@InjectModel(student.name) private studentModel:Model<student>,
+    private sharedService:SharedService){}
     
   async createStudent(params:studentDto){
     try{
@@ -65,7 +66,7 @@ export class StudentService {
     }
    }
 
-   async Login(req: studentDto) {
+   async login(req: studentDto) {
     try {
       const loginRes = await this.studentModel
         .findOne({ $or: [{ email: req.email }] })
@@ -108,13 +109,13 @@ export class StudentService {
               const randomNumber = Math.floor(Math.random() * 1000000 + 1);
               return doc.filename;
             });
-    
+                
             req.resume = reqDoc.toString();
           }
    const editstudent=await this.studentModel.updateOne(
     {studentId:req.studentId},
     {$set:{
-      name:req.name,
+     name:req.name,
      email:req.email, 
      phNumber:req.phNumber,
      password:req.password,
@@ -123,8 +124,14 @@ export class StudentService {
      education:req.education,
      gender:req.gender,
      firstName:req.firstName,
-     lastName:req.lastName
-
+     lastName:req.lastName,
+     addressLine1:req.addressLine1,
+     addressLine2:req.addressLine2,
+     city:req.city,
+     state:req.state,
+     pincode:req.pincode,
+     country:req.country,
+ 
     }})
 
     if(editstudent){
@@ -142,4 +149,27 @@ export class StudentService {
     }
 }
 
+
+
+async getStudentId(params:studentDto){
+  try{
+    const studentResp=await this.studentModel.findOne({studentId:params.studentId})
+    if(studentResp){
+      return {
+        statusCode:HttpStatus.OK,
+        data:studentResp
+      }
+    }
+    return{
+      statusCode:HttpStatus.BAD_REQUEST,
+      message:'Invalid Request'
+    }
+  }catch(error){
+    return {
+      statusCode:HttpStatus.INTERNAL_SERVER_ERROR,
+      message:error 
+    }
+  }
+}
+ 
 }

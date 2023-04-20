@@ -21,5 +21,28 @@ export class professionalDto{
     resume:string
     @ApiProperty()
     gender:string
+    @ApiProperty()
+    firstName:string
+    @ApiProperty()
+    lastName:string
+    @ApiProperty()
+    addressLine1:string
+    @ApiProperty()
+    addressLine2:string
+    @ApiProperty()
+    city:string
+    @ApiProperty()
+    state:string
+    @ApiProperty()
+    country:string
+    @ApiProperty()
+    pinCode:string
+    @ApiProperty()
+    changePassword:string
+    @ApiProperty()
+    oldPassword:string
+    @ApiProperty()
+    newPassword:string
+
 }
    

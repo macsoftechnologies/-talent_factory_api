@@ -23,6 +23,29 @@ export class professional extends Document{
     skills:string
     @Prop()
     resume:string
+    @Prop()
+    firstName:string
+    @Prop()
+    lastName:string
+    @Prop()
+    addressLine1:string
+    @Prop()
+    addressLine2:string
+    @Prop()
+    city:string
+    @Prop()
+    state:string
+    @Prop()
+    country:string
+    @Prop()
+    pinCode:string
+    @Prop()
+    changePassword:string
+    @Prop()
+    oldPassword:string
+    @Prop()
+    newPassword:string
+    
     
 }
 

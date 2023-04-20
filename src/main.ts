@@ -1,44 +1,28 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as express from 'express';
-import { join } from 'path';
 import { AppModule } from './app.module';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('dotenv').config()
+import { join } from 'path';
+import * as express from 'express';
+import * as bodyParser from 'body-parser';
 async function bootstrap() {
-  
   const app = await NestFactory.create(AppModule);
-  // app.enableCors({
-  //   origin: [
-  //     'http://localhost:4200',
-    
-  //   ],
-  // });
-  app.enableCors({ origin: '*' }); 
-
-  app.use(express.static(join(process.cwd(), './public/')));
-
-  const options = new DocumentBuilder()
-    .setTitle('talent-factory')
-    .setDescription('talent-factory')
-    .setVersion('1.0')
-    .addBearerAuth(
-      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
-      'JWT',
-    )
-    .build();
-  const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('api/v1', app, document);
+  const swaggerConfig = new DocumentBuilder()
+  .setTitle('talent-factory')
+  .setDescription('talent-factory')
+  //.addTag('Admin')
+  .setVersion('1.0')
+  .build();
+ const doc = SwaggerModule.createDocument(app, swaggerConfig);
+ SwaggerModule.setup('api/v1', app, doc);
+  app.enableCors({ origin: '*' });
   app.useGlobalPipes(new ValidationPipe());
-  console.log('process.env',process.env)
-  const PORT = 3003;
-  await app.listen(PORT);
+  app.use(express.static(join(process.cwd(), './files/')));
+  //app.setGlobalPrefix('/api')
+  app.use(bodyParser.json({ limit: '100mb' }));
+  app.use(bodyParser.urlencoded({ limit: '500mb', extended: true }));
+  app.enableCors();
+  await app.listen(process.env.PORT ||3003);
 
-  console.log(
-    `App started at ${new Date()} on port ${PORT} in ${
-      process.env.APP_ENV
-    } Environment`,
-  );
 }
-bootstrap(); 
+bootstrap();

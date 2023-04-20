@@ -18,10 +18,11 @@ export class ProfessionalService {
             message:'Created Sucessfully',
             Profess:addPro
         }
-        return {
-            statusCode:HttpStatus.BAD_REQUEST,
-
-        }
+          
+      }
+      return{
+        statusCode:HttpStatus.BAD_REQUEST,
+        message:'Invalid Request'
       }
        
     } catch(error){
@@ -73,6 +74,10 @@ export class ProfessionalService {
                     data:resp
                 }
              }
+             return{
+              statusCode:HttpStatus.BAD_REQUEST,
+              message:'Invalid Request'
+            }
         }catch(error){
             return {
                 statusCode:HttpStatus.INTERNAL_SERVER_ERROR,
@@ -92,6 +97,10 @@ export class ProfessionalService {
                 del:remove
             }
          }
+         return{
+          statusCode:HttpStatus.BAD_REQUEST,
+          message:'Invalid Request'
+        }
         }catch(error){
             return{
                 statusCode:HttpStatus.INTERNAL_SERVER_ERROR,
@@ -125,7 +134,16 @@ export class ProfessionalService {
                      education:params.education,
                      experience:params.experience,
                      skills:params.skills,
-                     gender:params.gender  
+                     gender:params.gender,
+                     firstName:params.firstName,
+                     lastName:params.lastName,
+                     addressLine1:params.addressLine1,
+                     addressLine2:params.addressLine2,
+                     city:params.city,
+                     state:params.state,
+                     country:params.country,
+                     pinCode:params.pinCode
+
                     
                 }}
             )
@@ -136,11 +154,36 @@ export class ProfessionalService {
                     edit:editProf
                 }
             }
+            return{
+              statusCode:HttpStatus.BAD_REQUEST,
+              message:'Invalid Request'
+            }
         }catch(error){
             return {
                 statusCode:HttpStatus.INTERNAL_SERVER_ERROR,
                 message:error 
             }
         }
+    }
+
+
+    async getProfesstionId(params:professionalDto){
+      try{
+        const profResp=await this.professionalModel.findOne({professionalId:params.professionalId})
+        if(profResp){
+          return {
+            statusCode:HttpStatus.OK,
+            resp:profResp
+          }
+        }return{
+          statusCode:HttpStatus.BAD_REQUEST,
+          message:'Invalid Request'
+        }
+      }catch(error){
+        return {
+          statusCode:HttpStatus.INTERNAL_SERVER_ERROR,
+          message:error 
+        }
+      }
     }
 }

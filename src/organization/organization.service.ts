@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { organizationDto } from './dto/organization.dto';
 import { organization } from './dto/organization.schema';
+ 
 
 @Injectable()
 export class OrganizationService {
@@ -57,7 +58,8 @@ export class OrganizationService {
         }
       }
 
-
+    
+      
     async getOrg(){
         try{
             const getOrg=await this.organizationModel.find()
@@ -105,7 +107,7 @@ export class OrganizationService {
                 password:params.password,
                 description:params.description,
                 location:params.location
-             }}
+              }}
         )
         if(edit){
             return {
@@ -120,5 +122,26 @@ export class OrganizationService {
             message:error 
         }
      }
+    }
+
+
+    async getOrgId(params:organizationDto){
+      try{
+        const orgResp=await this.organizationModel.findOne({organizationId:params.organizationId})
+        if(orgResp){
+          return{
+            statusCode:HttpStatus.OK,
+            data:orgResp
+          }
+        }return{
+          statusCode:HttpStatus.BAD_REQUEST,
+          message:'Invalid Reqest'
+        }
+      }catch(error){
+        return {
+          statusCode:HttpStatus.INTERNAL_SERVER_ERROR,
+          message:error 
+        }
+      }
     }
 }

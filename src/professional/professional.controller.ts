@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpStatus, Post, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { AnyFilesInterceptor, FileFieldsInterceptor } from '@nestjs/platform-express';
-import { ApiBody } from '@nestjs/swagger';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { extname } from 'path';
 import { professionalDto } from './dto/professional.dto';
 import { ProfessionalService } from './professional.service';
@@ -10,7 +10,10 @@ import { diskStorage } from 'multer';
 export class ProfessionalController {
   constructor(private readonly professionalService: ProfessionalService) {}
 
-
+  @ApiTags('professional')
+  @ApiBody({
+    type: professionalDto,
+  })
   @Post('/createProfessional')
   async addProfession(@Body() body:professionalDto){
     try{
@@ -24,7 +27,10 @@ export class ProfessionalController {
     }
   }
 
-
+  @ApiTags('professional')
+  @ApiBody({
+    type: professionalDto,
+  })
   @Post('/login')
   async login(@Body() req:professionalDto) {
     try {
@@ -44,7 +50,7 @@ export class ProfessionalController {
     }
   }
 
-
+  @ApiTags('professional')
   @Get()
   async proget(){
     try{
@@ -58,7 +64,10 @@ export class ProfessionalController {
     }
   }
 
-
+  @ApiTags('professional')
+  @ApiBody({
+    type: professionalDto,
+  })
   @Post('/deleteProfession')
   async removepro(@Body() body:professionalDto){
     try{
@@ -72,7 +81,10 @@ export class ProfessionalController {
     }
   }
 
-  
+  @ApiTags('professional')
+  @ApiBody({
+    type: professionalDto,
+  })
   @UseInterceptors(
     AnyFilesInterceptor({
       storage: diskStorage({
@@ -99,4 +111,25 @@ export class ProfessionalController {
       }
     }
   }
+
+
+
+  @ApiTags('professional')
+  @ApiBody({
+    type: professionalDto,
+  })
+  @Post('/getProfessionById')
+  async profget(@Body() body:professionalDto){
+    try{
+     const response=await this.professionalService.getProfesstionId(body)
+     return response
+  }catch(error){
+    return {
+      statusCode:HttpStatus.INTERNAL_SERVER_ERROR,
+      message:error 
+    }
+  }
+}
+
+
 }
