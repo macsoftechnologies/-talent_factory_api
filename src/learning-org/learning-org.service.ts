@@ -58,5 +58,104 @@ export class LearningOrgService {
         }
       }
 
+   
 
+      
+      async learnOrg(){
+        try{
+          const orgResp=await this.learningOrgModel.find()
+          if(orgResp){
+            return{
+              statusCode:HttpStatus.OK,
+              message:'list of learning Organization',
+              data:orgResp
+            }
+          }return {
+            statusCode:HttpStatus.BAD_REQUEST,
+            message:'Invalid Request'
+          }
+        }catch(error){
+          return{
+            statusCode:HttpStatus.INTERNAL_SERVER_ERROR,
+            message:error 
+          }
+        }
+      }
+
+
+
+      async learrnOrgId(params:learningOrgDto){
+        try{
+          const orgIdResp=await this.learningOrgModel.findOne({learningOrgId:params.learningOrgId})
+          if(orgIdResp){
+            return{
+              statusCode:HttpStatus.OK,
+              data:orgIdResp
+            }
+          }return{
+            statusCode:HttpStatus.BAD_REQUEST,
+            message:'Invalid Request'
+          }
+        }catch(error){
+          return {
+            statusCode:HttpStatus.INTERNAL_SERVER_ERROR,
+            message:error 
+          }
+        }
+      }
+
+
+    async dellearnOrg(params:learningOrgDto){
+      try{
+        const removeOrg=await this.learningOrgModel.deleteOne({learningOrgId:params.learningOrgId})
+        if(removeOrg){
+          return {
+            statusCode:HttpStatus.OK,
+            message:'deleted Sucessfully',
+            del:removeOrg
+          }
+        }return {
+          statusCode:HttpStatus.BAD_REQUEST,
+          message:'Invalid Request'
+        }
+      }catch(error){
+        return {
+          statusCode:HttpStatus.INTERNAL_SERVER_ERROR,
+          message:error 
+        }
+      }
+    }
+
+
+    async editlearnOrg(params:learningOrgDto){
+      try{
+        const editresp=await this.learningOrgModel.updateOne({learningOrgId:params.learningOrgId},
+          {$set:{
+            name:params.name,
+            email:params.email,
+            description:params.description,
+            Location:params.Location,
+            phoneNumber:params.phoneNumber,
+            memebers:params.memebers,
+            courses:params.courses,
+            password:params.password
+                  }})
+           if(editresp){
+            return {
+              statusCode:HttpStatus.OK,
+              message:'updated Sucessfully',
+              edit:editresp
+            }
+           }return{
+            statusCode:HttpStatus.BAD_REQUEST,
+            message:'Invalid Request'
+
+           }       
+      }catch(error){
+        return {
+          statusCode:HttpStatus.INTERNAL_SERVER_ERROR,
+          message:error 
+        }
+      }
+    }
 }

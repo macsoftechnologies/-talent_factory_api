@@ -2,6 +2,8 @@ import { ApiProperty } from "@nestjs/swagger"
 
 export class learningOrgDto{
     @ApiProperty()
+    learningOrgId:string
+    @ApiProperty()
     name:string
     @ApiProperty()
     email:string
@@ -15,10 +17,6 @@ export class learningOrgDto{
     memebers:string
     @ApiProperty()
     courses:string
-    @ApiProperty()
-    resource:string
-    @ApiProperty()
-    learningGoals:string
     @ApiProperty()
     assesment:string
     @ApiProperty()
